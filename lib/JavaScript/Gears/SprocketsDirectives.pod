@@ -1,0 +1,36 @@
+=head1 NAME
+
+JavaScript::Gears::SprocketsDirectives - Information regarding the Sprockets
+directives that are supported
+
+=head1 DIRECTIVES
+
+In Sprockets, directives are specified using a special form of single-line
+comment.
+
+  //= directive directive-args
+
+=head2 require
+
+This directive specifies other JavaScript files that are required by this
+file (i.e. dependencies). The directive only takes one argument: the file
+required. The argument may be specified in one of two ways:
+
+=over
+
+=item * Enclosed in double quotes. This means that the file specified is
+relative to the file.
+
+=item * Enclosed in angle brackets. This means that the file specified
+is located else where; relative to any of the specified load paths.
+
+=back
+
+Note: these Sprockets directives do not need their file names to be escaped
+according to the surrounding characters. If a file contains a C<"> and is
+relative, then it can be specified as C<//= require "my "file".js">. This
+is for compatibility with Sprockets. There must be nothing but space after
+the ending quote or bracket.
+
+  //= require <jquery/core-1.4.4.js>
+  //= require "booster.js"
