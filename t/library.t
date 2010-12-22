@@ -4,16 +4,28 @@ use 5.008003;
 use strict;
 use warnings 'all';
 
+use Test::Routine 0.004;
+use Test::Routine::Util 0.004;
 use Test::More 0.96; # done_testing & subtests
 use Test::Fatal 0.003;
-use Test::NoWarnings 1.02 qw[had_no_warnings];
-$Test::NoWarnings::do_end_test = 0; # We do this manually
+
+# MOOSE ROLES
+with(qw[t::lib::TypeTestTracking]);
 
 # MODULES
 use JavaScript::Gears::Library qw[ListOfDirs];
 use Path::Class;
 
-subtest ListOfDirs => sub {
+# ALL IMPORTS BEFORE THIS WILL BE ERASED
+use namespace::autoclean 0.09;
+
+sub build_library_tested { 'JavaScript::Gears::Library' };
+
+# TESTS
+test 'Type ListOfDirs' => sub {
+	my $self = shift;
+
+	# Make some variables to use
 	my $dir    = 't';
 	my $dir_o  = dir('t');
 	my @dirs   = (qw[lib t t/lib]);
@@ -32,8 +44,10 @@ subtest ListOfDirs => sub {
 	is(exception { ListOfDirs->assert_coerce(\@dirs_o) }, undef, 'coerces from arrayref of dir objects');
 };
 
-# End
-had_no_warnings;
+# RUN
+run_me;
+
+# END
 done_testing;
 
 exit 0;
